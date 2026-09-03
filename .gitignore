@@ -1,0 +1,51 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches
+*.sqlite3
+db.sqlite3
+__pycache__/
+.cachefolder/
+
+# Logs
+*.log
+
+# Temporary files
+*.swp
+
+# Environment variables
+.env
+
+# Secret key
+secret_key.txt
+
+# Visual Studio Code specific files
+.vscode/
+
+# Python-specific files
+*.pyc
+*.pyo
+
+# IDE-specific files
+.idea/
+
+# Django migration files
+/migrations/
+
+# Django static files
+/staticfiles/
+
+# Django media files
+/media/
+
+# Ignore local settings
+local_settings.py
+
+# Ignore database
+*.db
+
+# Ignore Python virtual environment
+venv/
+venv.bak/
