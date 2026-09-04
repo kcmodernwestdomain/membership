@@ -23,7 +23,6 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
-
 INSTALLED_APPS = [
     # ...
     'django.contrib.admin',
@@ -36,15 +35,16 @@ INSTALLED_APPS = [
     'account',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',  # Add this line
+    'corsheaders',
     'drf_yasg',
     # ...
 ]
 
 MIDDLEWARE = [
     # ...
-    'corsheaders.middleware.CorsMiddleware',  # Add this line
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # ...
 ]
+
 ROOT_URLCONF = 'managementsite.urls'
 
 TEMPLATES = [
@@ -73,20 +74,20 @@ TEMPLATES = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',  # ✅ Use JWT Authentication
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',  # ✅ Restrict access to authenticated users
+        'rest_framework.permissions.IsAuthenticated',
     ),
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  # Token expires in 30 minutes
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # Refresh token expires in 7 days
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
-    'SIGNING_KEY': SECRET_KEY,  # ✅ Use your project's SECRET_KEY to sign tokens
-    'AUTH_HEADER_TYPES': ('Bearer',),  # ✅ Tokens should be sent as "Authorization: Bearer <token>"
+    'SIGNING_KEY': SECRET_KEY,
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 WSGI_APPLICATION = 'managementsite.wsgi.application'
@@ -102,6 +103,7 @@ DATABASES = {
     )
 }
 
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -111,6 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -136,11 +141,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/static/'
 
 # The directory where static files will be collected for production
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # This will collect all static files here
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# WhiteNoise static file storage
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
@@ -149,10 +156,11 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'  # This will collect all static files her
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# CORS settings
+
 CORS_ALLOW_ALL_ORIGINS = False
 
-CORS_ALLOW_ALL_ORIGINS = False  # Disable unrestricted access
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React frontend (development)
-    "https://www.columbiarc.com",  # Your production frontend
+    "http://localhost:3000",
+    "https://www.columbiarc.com",
 ]
