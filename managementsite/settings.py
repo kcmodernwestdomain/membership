@@ -165,5 +165,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.columbiarc.com",
     "https://www.kcmodernwest.com",
     "https://www.kcmodernwest.com",
+    "https://www.columbiarecs.com "
 
 ]
